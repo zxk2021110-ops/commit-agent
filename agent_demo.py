@@ -1,11 +1,24 @@
+
+"""
+Commit Log to Changelog Agent - DeepSeek 版本
+使用环境变量读取 API Key，保护密钥安全
+"""
+
 import os
 import re
 import json
 from openai import OpenAI
+from dotenv import load_dotenv
 
-# ===== 在这里填你的 DeepSeek API Key =====
-DEEPSEEK_API_KEY = "sk-e5a6270a40f54072a1b25a31d0cc6d59"  # ← 替换这里
-# ========================================
+load_dotenv()  # 加载 .env 文件
+
+# ===== 从环境变量读取 API Key（安全方式）=====
+DEEPSEEK_API_KEY = os.environ.get("DEEPSEEK_API_KEY")
+
+if not DEEPSEEK_API_KEY:
+    print("❌ 错误：未找到 DEEPSEEK_API_KEY 环境变量")
+    print("请先运行：set DEEPSEEK_API_KEY=你的密钥")
+    exit(1)
 
 client = OpenAI(api_key=DEEPSEEK_API_KEY, base_url="https://api.deepseek.com")
 
